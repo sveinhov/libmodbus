@@ -44,3 +44,13 @@ tests/stamp-h2
 doc/*.html
 doc/*.3
 doc/*.7
+*.obj
+*.tlog
+*.pdb
+*.exp
+*.sdf
+*.map
+*.opensdf
+src/win32/modbus.res
+*.filters
+src/win32/UpgradeLog.htm
