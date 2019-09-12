@@ -49,9 +49,17 @@ int main(void)
 		fprintf(f, "%u \n%u \n", tab_reg[i], tab_reg[i+1]);
 		
 		float test = 0;
-		sample[0] = tab_reg[i];
-		sample[1] = tab_reg[i+1];
-		test = modbus_get_float_badc(sample);
+
+		
+		if (i == 8){
+			test = tab_reg[i];//Read 16bit register for SBP Setpoint
+		}
+		else{
+			sample[0] = tab_reg[i];
+			sample[1] = tab_reg[i + 1];
+			test = modbus_get_float_badc(sample);
+		}		
+		
 		fprintf(fo, "%f \n", test);
 	}
 	
