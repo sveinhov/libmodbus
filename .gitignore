@@ -54,3 +54,8 @@ doc/*.7
 src/win32/modbus.res
 *.filters
 src/win32/UpgradeLog.htm
+*.ilk
+*.idb
+*.res
+*.suo
+*.user
