@@ -59,3 +59,6 @@ src/win32/UpgradeLog.htm
 *.res
 *.suo
 *.user
+*.exe
+tests/Test Server/out.txt
+tests/Test Server/raw.txt
