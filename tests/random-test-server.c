@@ -98,11 +98,16 @@ int main(void)
 	fclose(fob);
 
 	//samplewrite
-	float anumber = 50.0;
+	float anumber;
+	anumber	= 45.00;
 	modbus_set_float_badc(anumber, samplewrite);
 
 
-	rc2 = modbus_write_register(ctx, 412398, samplewrite);
+	rc2 = modbus_write_registers(ctx, 12400, 2, samplewrite);
+
+
+	//uint16_t one = 1;
+	//rc2 = modbus_write_register(ctx, 412398, one);
 
 
 	modbus_close(ctx);
