@@ -23,9 +23,12 @@ int main(void)
 	modbus_t *ctx;
 	//allocate enough memory to store the results in dest (at least nb * sizeof(uint16_t)), = nb * 2.
 	uint16_t tab_reg[80];
+	uint16_t tab_regb[80];
 	uint16_t sample[2];
+	uint16_t samplewrite[2];
 	int rc;
 	int i;
+	int rc2;
 
 	ctx = modbus_new_tcp("192.168.51.31", 502);
 	if (modbus_connect(ctx) == -1) {
@@ -33,7 +36,7 @@ int main(void)
 		modbus_free(ctx);
 		return -1;
 	}
-	//while (;;){}
+	//READ DATA REGISTERS:
 	rc = modbus_read_registers(ctx, 12388, 40, tab_reg);
 	if (rc == -1) {
 		fprintf(stderr, "%s\n", modbus_strerror(errno));
@@ -65,6 +68,42 @@ int main(void)
 	
 	fclose(f);
 	fclose(fo);
+
+	//READ BOOL REGISTERS:
+
+
+	rc = modbus_read_registers(ctx, 12289, 33, tab_regb);
+	
+
+	FILE *fb = fopen("rawb.txt", "w");
+	FILE *fob = fopen("outb.txt", "w");
+
+	for (i = 0; i < rc; i++) {
+
+		fprintf(fb, "%i\n", tab_regb[i]);
+		
+		//Using masking
+		//uint16_t  k = 2048;
+		//uint16_t mask = 1 << k;
+		//uint16_t masked_n = tab_regb[i] & mask;
+		uint16_t mask = 2048;
+		uint16_t testb = -1;
+		testb = tab_regb[i] & mask;
+		//uint16_t thebit = masked_n >> k;
+		
+		//fprintf(fob, "%i\n", thebit);
+	}
+
+	fclose(fb);
+	fclose(fob);
+
+	//samplewrite
+	float anumber = 50.0;
+	modbus_set_float_badc(anumber, samplewrite);
+
+
+	rc2 = modbus_write_register(ctx, 412398, samplewrite);
+
 
 	modbus_close(ctx);
 	modbus_free(ctx);
